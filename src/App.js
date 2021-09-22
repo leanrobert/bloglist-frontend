@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import { getAll } from './services/blogs'
+import BlogForm from './components/BlogForm'
+import { createBlog, getAll } from './services/blogs'
 import { loginUser } from './services/login'
 
 const App = () => {
@@ -8,6 +9,11 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     getAll().then(blogs =>
@@ -34,6 +40,7 @@ const App = () => {
       setPassword('')
     } catch (exeption) {
       console.log('wrong credentials', exeption)
+      setError('wrong username or password')      
     }
   }
 
@@ -42,10 +49,20 @@ const App = () => {
     setUser(null)
   }
 
+  const handleSubmit = e => {
+    const newBlog = createBlog(title, author, url, user.token)
+    if(newBlog) {
+      const newBlogs = [...blogs, newBlog]
+      setBlogs(newBlogs)
+      setMessage(`Blog ${newBlog.title} added`)
+    }
+  }
+
   if (user === null) {
     return(
       <div>
         <h2>Log in to application</h2>
+        {error && <h2 className="error">{error}</h2>}
         <form onSubmit={logInUser}>
           <p>username <input value={username} onChange={e => setUsername(e.target.value)} /></p>
           <p>password <input value={password} onChange={e => setPassword(e.target.value)} type="password"/></p>
@@ -57,8 +74,10 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
+        {error && <h2 className="message">{message}</h2>}
         <p>{user.username} logged in</p>
         <button onClick={logout}>Log out</button>
+        <BlogForm title={title} author={author} url={url} handleSubmit={handleSubmit} handleAuthorChange={e => setAuthor(e.target.value)} handleTitleChange={e => setTitle(e.target.value)} handleUrlChange={e => setUrl(e.target.value)} />
         {blogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
             <Blog key={blog.id} blog={blog} />
