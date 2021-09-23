@@ -12,6 +12,7 @@ const createBlog = async (title, author, url, token) => {
       'Authorization': `Bearer ${token}`
     }
   }
+
   const request = await axios.post(baseUrl, { title, author, url }, config)
   return request.data
 }

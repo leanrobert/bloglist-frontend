@@ -10,15 +10,12 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
   useEffect(() => {
     getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs)
     )  
   }, [])
 
@@ -50,13 +47,10 @@ const App = () => {
     setUser(null)
   }
 
-  const handleSubmit = e => {
-    const newBlog = createBlog(title, author, url, user.token)
-    if(newBlog) {
-      const newBlogs = [...blogs, newBlog]
-      setBlogs(newBlogs)
-      setMessage(`Blog ${newBlog.title} added`)
-    }
+  const handleSubmit = (newBlog) => {
+    const returnedBlog = createBlog(newBlog.title, newBlog.author, newBlog.url, user.token)
+    setBlogs(blogs.concat(returnedBlog))
+    setMessage(`Blog ${returnedBlog.title} added`)
   }
 
   const blogFormRef = useRef()
@@ -81,7 +75,7 @@ const App = () => {
         <p>{user.username} logged in</p>
         <button onClick={logout}>Log out</button>
         <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-          <BlogForm title={title} author={author} url={url} handleSubmit={handleSubmit} handleAuthorChange={e => setAuthor(e.target.value)} handleTitleChange={e => setTitle(e.target.value)} handleUrlChange={e => setUrl(e.target.value)} />
+          <BlogForm createBlogFun={handleSubmit} />
         </Togglable>
         {blogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
