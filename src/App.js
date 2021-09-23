@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogDetails from './components/BlogDetails'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import { createBlog, getAll } from './services/blogs'
@@ -79,7 +80,12 @@ const App = () => {
         </Togglable>
         {blogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
+            <div>
             <Blog key={blog.id} blog={blog} />
+            <Togglable buttonLabel="View" key={blog.id} ref={blogFormRef}>
+              <BlogDetails blog={blog} />
+            </Togglable>
+            </div>
         )}
       </div>
     )
