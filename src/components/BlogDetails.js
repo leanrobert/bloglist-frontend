@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BlogDetails = ({ blog }) => {
+const BlogDetails = ({ blog, updatedLikesBlog }) => {
     const blogStyle = {
         paddingTop: 10,
         paddingLeft: 2,
@@ -9,10 +9,22 @@ const BlogDetails = ({ blog }) => {
         marginBottom: 5
     }
 
+    const updateBlog = () => {
+        const newBlog = {
+            _id: blog.id,
+            user: blog.user.id,
+            likes: blog.likes + 1,
+            author: blog.author,
+            title: blog.title,
+            url: blog.url
+        }
+        updatedLikesBlog(newBlog)
+    }
+
     return (
         <div style={blogStyle}>
             <p>{blog.url}</p>
-            <p>likes {blog.likes}<button>Like</button></p>
+            <p>likes {blog.likes}<button onClick={updateBlog}>Like</button></p>
             <p>{blog.author}</p>
         </div>
     )

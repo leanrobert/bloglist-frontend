@@ -3,7 +3,7 @@ import Blog from './components/Blog'
 import BlogDetails from './components/BlogDetails'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
-import { createBlog, getAll } from './services/blogs'
+import { createBlog, getAll, updateLikesBlog } from './services/blogs'
 import { loginUser } from './services/login'
 
 const App = () => {
@@ -54,6 +54,11 @@ const App = () => {
     setMessage(`Blog ${returnedBlog.title} added`)
   }
 
+  const updateLikeBlog = (newBlog) => {
+    const updatedBlog = updateLikesBlog(newBlog)
+    setMessage(`Blog ${updatedBlog.title} updated`)
+   }
+
   const blogFormRef = useRef()
 
   if (user === null) {
@@ -80,10 +85,10 @@ const App = () => {
         </Togglable>
         {blogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
-            <div>
-            <Blog key={blog.id} blog={blog} />
-            <Togglable buttonLabel="View" key={blog.id} ref={blogFormRef}>
-              <BlogDetails blog={blog} />
+            <div key={blog.id}>
+            <Blog blog={blog} />
+            <Togglable buttonLabel="View" ref={blogFormRef}>
+              <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} />
             </Togglable>
             </div>
         )}
