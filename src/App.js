@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 import { createBlog, getAll } from './services/blogs'
 import { loginUser } from './services/login'
 
@@ -58,6 +59,8 @@ const App = () => {
     }
   }
 
+  const blogFormRef = useRef()
+
   if (user === null) {
     return(
       <div>
@@ -77,7 +80,9 @@ const App = () => {
         {error && <h2 className="message">{message}</h2>}
         <p>{user.username} logged in</p>
         <button onClick={logout}>Log out</button>
-        <BlogForm title={title} author={author} url={url} handleSubmit={handleSubmit} handleAuthorChange={e => setAuthor(e.target.value)} handleTitleChange={e => setTitle(e.target.value)} handleUrlChange={e => setUrl(e.target.value)} />
+        <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+          <BlogForm title={title} author={author} url={url} handleSubmit={handleSubmit} handleAuthorChange={e => setAuthor(e.target.value)} handleTitleChange={e => setTitle(e.target.value)} handleUrlChange={e => setUrl(e.target.value)} />
+        </Togglable>
         {blogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
             <Blog key={blog.id} blog={blog} />
