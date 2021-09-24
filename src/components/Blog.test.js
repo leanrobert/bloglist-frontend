@@ -92,3 +92,29 @@ test('clicking button shows likes', () => {
     'test.blog.com'
   )
 })
+
+test('clickin 2 times like button, props are received twice', () => {
+  const blog = {
+    title: 'test blog title',
+    author: 'test blog author',
+    url: 'test.blog.com'
+  }
+
+  const mockHandler = jest.fn()
+  const mockHandler2 = jest.fn()
+
+  const component = render(
+    <div>
+      <p>{blog.url} </p>
+      <p>likes {blog.likes} <button onClick={mockHandler}>Like </button></p>
+      <p>{blog.author} </p>
+      <button onClick={mockHandler2}>remove</button>
+    </div>
+  )
+
+  const buttonLike = component.getByText('Like')
+  fireEvent.click(buttonLike)
+  fireEvent.click(buttonLike)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
