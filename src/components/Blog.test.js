@@ -118,3 +118,4 @@ test('clickin 2 times like button, props are received twice', () => {
 
   expect(mockHandler.mock.calls).toHaveLength(2)
 })
+
