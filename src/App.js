@@ -13,6 +13,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const sortedBlogs = blogs.sort((a, b) => (a.likes > b.likes) ? -1 : (a.likes < b.likes) ? 1 : 0)
 
   useEffect(() => {
     getAll().then(blogs =>
@@ -83,13 +84,13 @@ const App = () => {
         <Togglable buttonLabel="New Blog" ref={blogFormRef}>
           <BlogForm createBlogFun={handleSubmit} />
         </Togglable>
-        {blogs.map(blog =>
+        {sortedBlogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
             <div key={blog.id}>
-            <Blog blog={blog} />
-            <Togglable buttonLabel="View" ref={blogFormRef}>
-              <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} />
-            </Togglable>
+              <Blog blog={blog} />
+              <Togglable buttonLabel="View" ref={blogFormRef}>
+                <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} />
+              </Togglable>
             </div>
         )}
       </div>
