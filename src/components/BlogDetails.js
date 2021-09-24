@@ -27,9 +27,9 @@ const BlogDetails = ({ blog, updatedLikesBlog, deleteBlogById }) => {
 
   return (
     <div style={blogStyle}>
-      <p>{blog.url}</p>
-      <p>likes {blog.likes}<button onClick={updateBlog}>Like</button></p>
-      <p>{blog.author}</p>
+      <p>{blog.url} </p>
+      <p>likes {blog.likes} <button onClick={updateBlog}>Like </button></p>
+      <p>{blog.author} </p>
       <button onClick={removeBlog}>remove</button>
     </div>
   )
