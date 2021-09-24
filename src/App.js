@@ -3,7 +3,7 @@ import Blog from './components/Blog'
 import BlogDetails from './components/BlogDetails'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
-import { createBlog, getAll, updateLikesBlog } from './services/blogs'
+import { createBlog, getAll, updateLikesBlog, deleteBlog } from './services/blogs'
 import { loginUser } from './services/login'
 
 const App = () => {
@@ -58,7 +58,13 @@ const App = () => {
   const updateLikeBlog = (newBlog) => {
     const updatedBlog = updateLikesBlog(newBlog)
     setMessage(`Blog ${updatedBlog.title} updated`)
-   }
+  }
+
+  const handleDelete = (title, id) => {
+    if(window.confirm(`Remove blog ${title} ?`)) {
+      deleteBlog(id, user.token)
+    } 
+  }
 
   const blogFormRef = useRef()
 
@@ -89,7 +95,7 @@ const App = () => {
             <div key={blog.id}>
               <Blog blog={blog} />
               <Togglable buttonLabel="View" ref={blogFormRef}>
-                <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} />
+                <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} deleteBlogById={handleDelete} />
               </Togglable>
             </div>
         )}
