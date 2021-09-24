@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     getAll().then(blogs =>
       setBlogs(blogs)
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const App = () => {
       setPassword('')
     } catch (exeption) {
       console.log('wrong credentials', exeption)
-      setError('wrong username or password')      
+      setError('wrong username or password')
     }
   }
 
@@ -63,7 +63,7 @@ const App = () => {
   const handleDelete = (title, id) => {
     if(window.confirm(`Remove blog ${title} ?`)) {
       deleteBlog(id, user.token)
-    } 
+    }
   }
 
   const blogFormRef = useRef()
