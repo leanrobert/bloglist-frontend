@@ -92,7 +92,7 @@ const App = () => {
         </Togglable>
         {sortedBlogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
-            <div key={blog.id}>
+            <div key={blog.id} className="blog">
               <Blog blog={blog} />
               <Togglable buttonLabel="View" ref={blogFormRef}>
                 <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} deleteBlogById={handleDelete} />
