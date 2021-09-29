@@ -72,5 +72,12 @@ describe('Blog app', function() {
       cy.contains('View').click()
       cy.contains('likes 1')
     })
+
+    it('A blog can be deleted', function() {
+      cy.contains('View').click()
+      cy.contains('remove').click()
+      cy.on('window:confirm', () => true)
+      cy.reload()
+    })
   })
 })
