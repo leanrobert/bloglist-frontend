@@ -15,10 +15,9 @@ const App = () => {
   const [message, setMessage] = useState('')
   const sortedBlogs = blogs.sort((a, b) => (a.likes > b.likes) ? -1 : (a.likes < b.likes) ? 1 : 0)
 
-  useEffect(() => {
-    getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+  useEffect(async () => {
+    const blogs = await getAll()
+    setBlogs(blogs)
   }, [])
 
   useEffect(() => {
@@ -49,8 +48,8 @@ const App = () => {
     setUser(null)
   }
 
-  const handleSubmit = (newBlog) => {
-    const returnedBlog = createBlog(newBlog.title, newBlog.author, newBlog.url, user.token)
+  const handleSubmit = async (newBlog) => {
+    const returnedBlog = await createBlog(newBlog.title, newBlog.author, newBlog.url, user.token)
     setBlogs(blogs.concat(returnedBlog))
     setMessage(`Blog ${returnedBlog.title} added`)
   }
@@ -87,7 +86,7 @@ const App = () => {
         {error && <h2 className="message">{message}</h2>}
         <p>{user.username} logged in</p>
         <button onClick={logout}>Log out</button>
-        <Togglable buttonLabel="New Blog" ref={blogFormRef}>
+        <Togglable buttonLabel="New Blog" ref={blogFormRef} >
           <BlogForm createBlogFun={handleSubmit} />
         </Togglable>
         {sortedBlogs.map(blog =>

@@ -5,7 +5,7 @@ const BlogForm = ({ createBlogFun }) => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     createBlogFun({ title, author, url })
     setTitle('')
@@ -19,7 +19,7 @@ const BlogForm = ({ createBlogFun }) => {
       <p>title: <input type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} id='title' /></p>
       <p>author: <input type="text" name="author" value={author} onChange={e => setAuthor(e.target.value)} id='author' /></p>
       <p>url: <input type="text" name="url" value={url} onChange={e => setUrl(e.target.value)} id='url'/></p>
-      <button type="submit">Create</button>
+      <button id="create-button" type="submit">Create</button>
     </form>
   )
 }
