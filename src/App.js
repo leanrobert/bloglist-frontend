@@ -74,9 +74,9 @@ const App = () => {
         <h2>Log in to application</h2>
         {error && <h2 className="error">{error}</h2>}
         <form onSubmit={logInUser}>
-          <p>username <input value={username} onChange={e => setUsername(e.target.value)} /></p>
-          <p>password <input value={password} onChange={e => setPassword(e.target.value)} type="password"/></p>
-          <button type="submit">log in</button>
+          <p>username <input id="username" value={username} onChange={e => setUsername(e.target.value)} /></p>
+          <p>password <input id="password" value={password} onChange={e => setPassword(e.target.value)} type="password"/></p>
+          <button id="login-button" type="submit">log in</button>
         </form>
       </div>
     )
