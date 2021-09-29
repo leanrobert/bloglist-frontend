@@ -86,14 +86,14 @@ const App = () => {
         {error && <h2 className="message">{message}</h2>}
         <p>{user.username} logged in</p>
         <button onClick={logout}>Log out</button>
-        <Togglable buttonLabel="New Blog" ref={blogFormRef} >
+        <Togglable buttonLabel="New Blog" ref={blogFormRef} classed="blog-create-button" >
           <BlogForm createBlogFun={handleSubmit} />
         </Togglable>
         {sortedBlogs.map(blog =>
           (blog.user && blog.user.username === user.username) &&
             <div key={blog.id} className="blog">
               <Blog blog={blog} />
-              <Togglable buttonLabel="View" ref={blogFormRef}>
+              <Togglable buttonLabel="View" ref={blogFormRef} classed="view-button">
                 <BlogDetails blog={blog} updatedLikesBlog={updateLikeBlog} deleteBlogById={handleDelete} />
               </Togglable>
             </div>
