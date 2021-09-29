@@ -54,8 +54,8 @@ const App = () => {
     setMessage(`Blog ${returnedBlog.title} added`)
   }
 
-  const updateLikeBlog = (newBlog) => {
-    const updatedBlog = updateLikesBlog(newBlog)
+  const updateLikeBlog = async (newBlog) => {
+    const updatedBlog = await updateLikesBlog(newBlog)
     setMessage(`Blog ${updatedBlog.title} updated`)
   }
 

@@ -52,4 +52,25 @@ describe('Blog app', function() {
       cy.contains('historias de la pampa leandro')
     })
   })
+
+  describe('When blog is created', () => {
+    beforeEach(function() {
+      cy.get('#username').type('lean')
+      cy.get('#password').type('lean1234')
+      cy.get('#login-button').click()
+      cy.contains('New Blog').click()
+      cy.get('#title').type('historias de la pampa')
+      cy.get('#author').type('leandro')
+      cy.get('#url').type('http://rrbakery.com.ar')
+      cy.get('#create-button').click()
+    })
+
+    it('A blog can be liked', function() {
+      cy.contains('View').click()
+      cy.contains('Like').click()
+      cy.reload()
+      cy.contains('View').click()
+      cy.contains('likes 1')
+    })
+  })
 })
